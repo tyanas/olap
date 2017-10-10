@@ -1,6 +1,7 @@
 {
     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "semi": ["error", "always"],
         "indent": [2, 4]
     },
