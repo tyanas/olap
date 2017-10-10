@@ -53,7 +53,6 @@ class StatisticsPage extends Component {
             ...other
         } = this.state;
         this.setState({ filters: newFilters, ...other });
-        console.log('stat', this.state, newFilters); // eslint-disable-line no-console
     }
 
     render() {
@@ -63,10 +62,9 @@ class StatisticsPage extends Component {
         if (filters.source) {
             columns = columnsByDataset(this.getSelectedDataset())
                 .filter(column => {
-                    return filters.groupBy.indexOf(column.field) == -1;
+                    return filters.groupBy.indexOf(column.field) === -1;
                 });
         }
-        console.log('render', filters, columns);  // eslint-disable-line no-console
         return (
             <div>
                 <Paper className={classes.filters}>
@@ -87,10 +85,8 @@ class StatisticsPage extends Component {
     }
 
     getSelectedDataset(source) {
-        console.log('get selected source')
         source = source ? source : this.state.filters.source;
         if (source) {
-            console.log(source);
             return this.datasetMap[source];
         }
     }
