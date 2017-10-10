@@ -22,7 +22,7 @@ class GroupBy extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupBy: ''
+            groupBy: []
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -34,17 +34,16 @@ class GroupBy extends Component {
 
     render() {
         const { classes, source }  = this.props;
+        const options = source.fields.filter(field => field.isKeyField);
         return (
             <FormControl className={classes.formControl}>
-                <InputLabel htmlFor='groupBy-simple'>Группировка</InputLabel>
+                <InputLabel htmlFor='groupBy-multiple'>Группировка</InputLabel>
                 <Select
+                    multiple
                     value={this.state.groupBy}
                     onChange={this.handleChange}
-                    input={<Input id='groupBy-simple' />}>
-                    <MenuItem value=''>
-                        <em>Не выбрано</em>
-                    </MenuItem>
-                    {source.fields.filter(field => field.isKeyField).map((field, index) => (
+                    input={<Input id='groupBy-multiple' />}>
+                    {options.map((field, index) => (
                         <MenuItem key={index} value={field.field}>{field.displayName}</MenuItem>
                     ))}
                 </Select>

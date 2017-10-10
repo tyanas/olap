@@ -63,7 +63,7 @@ class StatisticsPage extends Component {
         if (filters.source) {
             columns = columnsByDataset(this.getSelectedDataset())
                 .filter(column => {
-                    return column.field !== filters.groupBy;
+                    return filters.groupBy.indexOf(column.field) == -1;
                 });
         }
         console.log('render', filters, columns);  // eslint-disable-line no-console
