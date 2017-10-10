@@ -16,6 +16,25 @@ const data = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
+const emptyList = new Array(20);
+for (let i=0; i < 20; i++) {
+    emptyList[i] = 1;
+}
+
+function randomNumber(index, scale = 1000000) {
+    return Math.floor(index + Math.random() * scale);
+}
+
+function randomString(index) {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const length = randomNumber(index, 50);
+    let result = '';
+    for (var i = length; i > 0; --i) {
+        result += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return result;
+}
+
 const columns = [
     { key: 'name', label: 'Dessert (100g serving)'},
     { key: 'calories', label: 'Calories', numeric: true},
@@ -25,8 +44,7 @@ const columns = [
 ];
 
 function BasicTable(props) {
-    const { columns, data } = props;
-
+    const { columns } = props;
     return (
         <Table>
             <TableHead>
@@ -39,13 +57,13 @@ function BasicTable(props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {columns && data.map(n => {
+                {columns && emptyList.map((n, index) => {
                     return (
-                        <TableRow key={n.id}>
+                        <TableRow key={index}>
                             {columns.map((column, index) => (
                                 <TableCell
                                     numeric={column.numeric}
-                                    key={index}>{n[column.key]}</TableCell>
+                                    key={index}>{column.numeric ? randomNumber(index) : randomString(index)}</TableCell>
                             ))}
                         </TableRow>
                     );
