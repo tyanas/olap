@@ -75,6 +75,7 @@ function BasicTable(props) {
 
 BasicTable.propTypes = {
     classes: PropTypes.object,
+    groupBy: PropTypes.string,
     data: PropTypes.array,
     columns: PropTypes.array
 };

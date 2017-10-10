@@ -4,7 +4,8 @@
     "rules": {
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "semi": ["error", "always"],
-        "indent": [2, 4]
+        "indent": [2, 4],
+        "jsx-quotes": ["error", "prefer-single"]
     },
     "plugins": [
         "react"

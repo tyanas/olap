@@ -18,6 +18,47 @@ const styles = theme => ({
     }
 });
 
+class GroupBy extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            groupBy: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ groupBy: event.target.value });
+        this.props.onChange(event);
+    }
+
+    render() {
+        const { classes, source }  = this.props;
+        return (
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor='groupBy-simple'>Группировка</InputLabel>
+                <Select
+                    value={this.state.groupBy}
+                    onChange={this.handleChange}
+                    input={<Input id='groupBy-simple' />}>
+                    <MenuItem value=''>
+                        <em>Не выбрано</em>
+                    </MenuItem>
+                    {source.fields.filter(field => field.isKeyField).map((field, index) => (
+                        <MenuItem key={index} value={field.field}>{field.displayName}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        );
+    }
+}
+
+GroupBy.propTypes = {
+    source: PropTypes.object,
+    onChange: PropTypes.func,
+    classes: PropTypes.object.isRequired
+};
+
 class BasicFilters extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +81,7 @@ class BasicFilters extends Component {
     }
 
     render () {
-        const { classes, sources } = this.props;
+        const { classes, sources, selectedSource } = this.props;
         return (
             <form className={classes.container}>
                 <FormControl className={classes.formControl}>
@@ -57,6 +98,10 @@ class BasicFilters extends Component {
                         ))}
                     </Select>
                 </FormControl>
+                {this.state.source && <GroupBy
+                    onChange={this.handleChange('groupBy')}
+                    source={selectedSource(this.state.source)}
+                    classes={classes} />}
                 <Button onClick={this.handleSubmit} color='primary'>
                     Применить
                 </Button>
@@ -69,6 +114,7 @@ BasicFilters.propTypes = {
     classes: PropTypes.object.isRequired,
     sources: PropTypes.array,
     filters: PropTypes.object,
+    selectedSource: PropTypes.func,
     onSubmit: PropTypes.func
 };
 

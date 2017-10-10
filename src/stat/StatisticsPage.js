@@ -31,6 +31,7 @@ class StatisticsPage extends Component {
 
         this.handleFetchDatasets = this.handleFetchDatasets.bind(this);
         this.handleFiltersChange = this.handleFiltersChange.bind(this);
+        this.getSelectedDataset = this.getSelectedDataset.bind(this);
 
         // on components will/did mount
         this.handleFetchDatasets(datasets);
@@ -58,20 +59,40 @@ class StatisticsPage extends Component {
     render() {
         const { classes } = this.props;
         const { filters } = this.state;
-        console.log('render', filters);  // eslint-disable-line no-console
+        let columns = [];
+        if (filters.source) {
+            columns = columnsByDataset(this.getSelectedDataset())
+                .filter(column => {
+                    return column.field !== filters.groupBy;
+                });
+        }
+        console.log('render', filters, columns);  // eslint-disable-line no-console
         return (
             <div>
                 <Paper className={classes.filters}>
                     <BasicFilters
                         sources={this.sortedDatasets}
+                        selectedSource={this.getSelectedDataset}
                         onSubmit={this.handleFiltersChange}
                         filters={filters} />
                 </Paper>
-                {filters.source && <Paper className={classes.table}>
-                    <BasicTable columns={columnsByDataset(this.datasetMap[filters.source])}/>
-                </Paper>}
+                {
+                    filters.source &&
+                    <Paper className={classes.table}>
+                        <BasicTable columns={columns}/>
+                    </Paper>
+                }
             </div>
         );
+    }
+
+    getSelectedDataset(source) {
+        console.log('get selected source')
+        source = source ? source : this.state.filters.source;
+        if (source) {
+            console.log(source);
+            return this.datasetMap[source];
+        }
     }
 }
 

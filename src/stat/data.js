@@ -7,7 +7,7 @@ const availableDatasets = [
             { weight: 400, field: 'status', displayName: 'Статус', type: 'STRING', isKeyField: true },
             { weight: 100, field: 'person_name', displayName: 'ФИО', type: 'STRING', isKeyField: true },
             { weight: 320, field: 'unit2', displayName: 'Отдел 2', type: 'STRING', isKeyField: true },
-            { weight: 310, field: 'unit1', displayName: 'Отдел 1', type: 'STRING', isKeyField: true },
+            { weight: 310, field: 'unit1', displayName: 'Отдел 1', type: 'STRING', isKeyField: false },
             { weight: 330, field: 'unit3', displayName: 'Отдел 3', type: 'STRING', isKeyField: true },
             { weight: 340, field: 'unit4', displayName: 'Отдел 4', type: 'STRING', isKeyField: true },
             { weight: 200, field: 'cnt', displayName: 'Количество', type: 'INTEGER', isKeyField: false }
@@ -20,7 +20,7 @@ const availableDatasets = [
         fields: [
             { weight: 400, field: 'status0', displayName: 'Статус 0', type: 'STRING', isKeyField: true },
             { weight: 450, field: 'status5', displayName: 'Статус 5', type: 'STRING', isKeyField: true },
-            { weight: 440, field: 'status4', displayName: 'Статус 4', type: 'STRING', isKeyField: true },
+            { weight: 440, field: 'status4', displayName: 'Статус 4', type: 'STRING', isKeyField: false },
             { weight: 430, field: 'status3', displayName: 'Статус 3', type: 'STRING', isKeyField: true },
             { weight: 420, field: 'status2', displayName: 'Статус 2', type: 'STRING', isKeyField: true },
             { weight: 300, field: 'person_name', displayName: 'ФИО', type: 'STRING', isKeyField: true },
@@ -65,7 +65,7 @@ export function columnsByDataset(dataset) {
     });
     return columns.map(field => {
         return {
-            key: field.field,
+            field: field.field,
             label: field.displayName,
             numeric: field.type === 'INTEGER' || field.type === 'FLOAT'
         };
